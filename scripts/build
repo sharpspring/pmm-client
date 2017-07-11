@@ -46,6 +46,7 @@ go build -ldflags "-X github.com/percona/qan-agent/agent/release.VERSION=$VERSIO
 
 printf "Building node_exporter...\t"
 cd $GOPATH/src/github.com/prometheus/node_exporter
+git checkout v0.14.0+percona.1
 make
 mv ./node_exporter $SOURCE_DIR/distro/bin/node_exporter
 
@@ -62,11 +63,13 @@ go build -ldflags "-X $importpath/version.Version=$VERSION -X $importpath/versio
 
 printf "Building mongodb_exporter...\t"
 cd $GOPATH/src/github.com/percona/mongodb_exporter
+git checkout v0.3.0
 make
 mv ./mongodb_exporter $SOURCE_DIR/distro/bin/mongodb_exporter
 
 printf "Building proxysql_exporter...\t"
 cd $GOPATH/src/github.com/percona/proxysql_exporter
+git checkout v1.1.0
 make
 mv ./proxysql_exporter $SOURCE_DIR/distro/bin/proxysql_exporter
 
