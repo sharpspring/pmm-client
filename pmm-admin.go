@@ -1338,7 +1338,6 @@ func main() {
 	cmdAddMySQLQueries.Flags().BoolVar(&flagMySQLQueries.SlowLogRotation, "slow-log-rotation", true, "enable slow log rotation")
 	cmdAddMySQLQueries.Flags().IntVar(&flagMySQLQueries.RetainSlowLogs, "retain-slow-logs", 1, "number of slow logs to retain after rotation")
 	cmdAddMySQLQueries.Flags().StringVar(&flagMySQLQueries.QuerySource, "query-source", "auto", "source of SQL queries: auto, slowlog, perfschema")
-	// thad changes
 	cmdAddMySQLQueries.Flags().StringVar(&flagMySQLQueries.SlowLogLocation, "slow-log-location", "auto", "slow log file location")
 
 	addCommonMongoDBFlags := func(cmd *cobra.Command) {
