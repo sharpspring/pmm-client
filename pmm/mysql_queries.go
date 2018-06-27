@@ -38,11 +38,13 @@ type MySQLQueriesFlags struct {
 	// slowlog specific options.
 	RetainSlowLogs  int
 	SlowLogRotation bool
+	SlowLogLocation string
 }
 
 // MySQLQueriesResult is result returned by AddMySQLQueries.
 type MySQLQueriesResult struct {
-	QuerySource string
+	QuerySource     string
+	SlowLogLocation string
 }
 
 // AddMySQLQueries add mysql instance to Query Analytics.
@@ -158,6 +160,8 @@ func (a *Admin) AddMySQLQueries(mi MySQLInfo, mf MySQLQueriesFlags, qf QueriesFl
 		}
 	}
 
+	mr.SlowLogLocation = mf.SlowLogLocation
+
 	exampleQueries := !qf.DisableQueryExamples
 	// Start QAN by associating instance with agent.
 	qanConfig := pc.QAN{
@@ -167,6 +171,7 @@ func (a *Admin) AddMySQLQueries(mi MySQLInfo, mf MySQLQueriesFlags, qf QueriesFl
 		ExampleQueries: &exampleQueries,
 		// "slowlog" specific options.
 		SlowLogRotation: &mf.SlowLogRotation,
+		SlowLogLocation: &mf.SlowLogLocation,
 		RetainSlowLogs:  &mf.RetainSlowLogs,
 	}
 	if err := a.startQAN(agentID, qanConfig); err != nil {
