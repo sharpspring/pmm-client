@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-set -eu
+set -xeu
 
-SOURCE_DIR="$PWD"
-VERSION="$(cat VERSION)"
+#SOURCE_DIR="$PWD"
+#VERSION="$(cat VERSION)"
+SOURCE_DIR="/go/src/github.com/percona/pmm-client"
+VERSION="$(cat /go/src/github.com/percona/pmm-client/VERSION)"
+cd $SOURCE_DIR
 
 # To distinguish dev and release builds, we append "-devDATE.REVISION" to dev builds.
 if [ "${DEV:-yes}" = "yes" ]; then
@@ -23,6 +26,8 @@ echo
 
 # Default build for linux, not Darwin.
 export GOOS=linux
+
+go get
 
 printf "Building pmm-admin...\t\t"
 echo $(git log -1 --format="%d %cd")
@@ -47,8 +52,8 @@ mv ./node_exporter $SOURCE_DIR/distro/bin/node_exporter
 
 printf "Building mysqld_exporter...\t"
 cd $GOPATH/src/github.com/percona/mysqld_exporter
-commit=$(git rev-parse HEAD)
-branch=$(git rev-parse --abbrev-ref HEAD)
+commit=v0.10.0+percona.4
+branch=v0.10.0+percona.4
 echo $(git log -1 --format="%d %cd")
 importpath=github.com/percona/mysqld_exporter/vendor/github.com/prometheus/common
 cd $SOURCE_DIR
@@ -76,3 +81,4 @@ tar czf $PKG_NAME.tar.gz $PKG_NAME
 echo
 echo "Done with $PKG_DIR.tar.gz"
 echo
+set +x

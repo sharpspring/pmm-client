@@ -171,7 +171,8 @@ func (a *Admin) AddMySQLQueries(mi MySQLInfo, mf MySQLQueriesFlags, qf QueriesFl
 		ExampleQueries: &exampleQueries,
 		// "slowlog" specific options.
 		SlowLogRotation: &mf.SlowLogRotation,
-		SlowLogLocation: &mf.SlowLogLocation,
+		// SlowLogLocation: &mf.SlowLogLocation,
+		SlowLogLocation: mf.SlowLogLocation,
 		RetainSlowLogs:  &mf.RetainSlowLogs,
 	}
 	if err := a.startQAN(agentID, qanConfig); err != nil {

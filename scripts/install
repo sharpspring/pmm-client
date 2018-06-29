@@ -2,8 +2,11 @@
 
 set -eu
 
+BIN_DIR="/go/src/github.com/percona/pmm-client/distro"
 PMM_DIR="/usr/local/percona/pmm-client"
 QAN_DIR="/usr/local/percona/qan-agent"
+#PMM_DIR="/go/src/github.com/percona/pmm-client/distro"
+#QAN_DIR="/go/src/github.com/percona/pmm-client/distro"
 
 if [ $(id -u) -ne 0 ]; then
     echo "The script requires superuser privileges."
@@ -15,10 +18,10 @@ mkdir -p $PMM_DIR $QAN_DIR/bin
 # delete old symlink
 rm -f /usr/sbin/pmm-admin
 
-cp -f bin/pmm-admin /usr/sbin/
-cp -f bin/node_exporter $PMM_DIR/
-cp -f bin/mysqld_exporter $PMM_DIR/
-cp -f bin/mongodb_exporter $PMM_DIR/
-cp -f bin/proxysql_exporter $PMM_DIR/
-cp -f bin/percona-qan-agent $QAN_DIR/bin/
-cp -f bin/percona-qan-agent-installer $QAN_DIR/bin/
+cp -f $BIN_DIR/bin/pmm-admin /usr/sbin/
+cp -f $BIN_DIR/bin/node_exporter $PMM_DIR/
+cp -f $BIN_DIR/bin/mysqld_exporter $PMM_DIR/
+cp -f $BIN_DIR/bin/mongodb_exporter $PMM_DIR/
+cp -f $BIN_DIR/bin/proxysql_exporter $PMM_DIR/
+cp -f $BIN_DIR/bin/percona-qan-agent $QAN_DIR/bin/
+cp -f $BIN_DIR/bin/percona-qan-agent-installer $QAN_DIR/bin/
